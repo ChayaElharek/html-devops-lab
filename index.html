@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>html-devops-lab</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;800&display=swap');
+
+    :root {
+      --bg: #0a0e1a;
+      --surface: #111827;
+      --border: #1e2d45;
+      --accent: #00d4ff;
+      --accent2: #7c3aed;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --green: #22c55e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 20%, rgba(0,212,255,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(124,58,237,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 860px;
+      width: 90%;
+      padding: 2rem 0;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .header-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* Hero */
+    .hero {
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s ease forwards;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* Stack badges */
+    .stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s ease forwards;
+    }
+
+    .badge {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.75rem;
+      color: var(--text);
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .badge:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .badge.accent { border-color: rgba(0,212,255,0.4); color: var(--accent); }
+    .badge.purple { border-color: rgba(124,58,237,0.4); color: #a78bfa; }
+
+    /* Pipeline */
+    .pipeline {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.3s ease forwards;
+    }
+
+    .pipeline-title {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.2rem;
+    }
+
+    .pipeline-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      row-gap: 0.5rem;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+    }
+
+    .step-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .step-label { color: var(--muted); }
+
+    .arrow {
+      color: var(--border);
+      font-size: 1rem;
+      padding: 0 0.5rem;
+    }
+
+    /* Info cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.4s ease forwards;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover { border-color: var(--accent2); }
+
+    .card-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 0.6s 0.5s ease forwards;
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <div class="dot"></div>
+      <span class="header-label">deployed · running</span>
+    </div>
+
+    <div class="hero">
+      <h1>html-devops-<span>lab</span></h1>
+      <p>Projeto de portfólio demonstrando pipeline completo de DevOps: containerização com Docker, provisionamento de infraestrutura com Terraform na AWS e entrega contínua via GitHub Actions.</p>
+    </div>
+
+    <div class="stack">
+      <span class="badge accent">HTML5</span>
+      <span class="badge accent">Docker</span>
+      <span class="badge">Nginx</span>
+      <span class="badge purple">Terraform</span>
+      <span class="badge purple">AWS EC2</span>
+      <span class="badge">GitHub Actions</span>
+      <span class="badge">CI/CD</span>
+    </div>
+
+    <div class="pipeline">
+      <div class="pipeline-title">// pipeline de deploy</div>
+      <div class="pipeline-steps">
+        <div class="step">
+          <div class="step-icon">📝</div>
+          <span class="step-label">push</span>
+        </div>
+        <span class="arrow">→</span>
+        <div class="step">
+          <div class="step-icon">⚙️</div>
+          <span class="step-label">build</span>
+        </div>
+        <span class="arrow">→</span>
+        <div class="step">
+          <div class="step-icon">🐳</div>
+          <span class="step-label">docker</span>
+        </div>
+        <span class="arrow">→</span>
+        <div class="step">
+          <div class="step-icon">🌿</div>
+          <span class="step-label">terraform</span>
+        </div>
+        <span class="arrow">→</span>
+        <div class="step">
+          <div class="step-icon">☁️</div>
+          <span class="step-label">aws ec2</span>
+        </div>
+        <span class="arrow">→</span>
+        <div class="step">
+          <div class="step-icon">✅</div>
+          <span class="step-label">live</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-num">01</div>
+        <div class="card-label">Container Docker com Nginx servindo o site</div>
+      </div>
+      <div class="card">
+        <div class="card-num">02</div>
+        <div class="card-label">Infra AWS provisionada 100% com Terraform</div>
+      </div>
+      <div class="card">
+        <div class="card-num">03</div>
+        <div class="card-label">Deploy automático a cada push via GitHub Actions</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>html-devops-lab · portfólio devops</span>
+      <a href="https://github.com" target="_blank">github.com/ChayaElharek</a>
+    </div>
+
+  </div>
+</body>
+</html>

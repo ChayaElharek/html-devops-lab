@@ -1,0 +1,14 @@
+# ──────────────────────────────────────────────
+# html-devops-lab · Docker Compose
+# Uso local para testar antes de subir na AWS
+# ──────────────────────────────────────────────
+
+version: "3.8"
+
+services:
+  web:
+    build: .
+    container_name: html-devops-lab
+    ports:
+      - "8080:80"    # Acesse em http://localhost:8080
+    restart: unless-stopped
