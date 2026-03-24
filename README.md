@@ -68,7 +68,7 @@ html-devops-lab/
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/SEU_USUARIO/html-devops-lab.git
+git clone https://github.com/ChayaElharek/html-devops-lab.git
 cd html-devops-lab
 
 # 2. Suba com Docker Compose
