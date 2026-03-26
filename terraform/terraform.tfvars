@@ -6,6 +6,6 @@
 
 aws_region      = "us-east-1"
 project_name    = "html-devops-lab"
-instance_type   = "t2.micro"
+instance_type   = "t3.micro"
 public_key_path = "C:/Users/chaya/.ssh/id_rsa.pub"
 docker_image    = "chayaelharak/html-devops-lab:latest"
