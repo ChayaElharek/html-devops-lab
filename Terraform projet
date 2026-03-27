@@ -1,8 +1,0 @@
-Terraform projet 
-
-Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
-
-instance_public_ip  = "54.161.193.36"
-instance_public_dns = "ec2-54-161-193-36.compute-1.amazonaws.com"
-site_url            = "http://54.161.193.36"
-
