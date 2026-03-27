@@ -19,7 +19,7 @@
 ![Terraform Apply](docs/terraform-apply.png)
 
 ### Terraform init — provider AWS instalado
-![Terraform Init](docs/terraform-png)
+![Terraform Init](docs/terraform-init.png)
 
 ---
 
